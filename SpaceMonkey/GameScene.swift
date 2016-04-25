@@ -22,6 +22,18 @@ class GameScene: SKScene {
         
         // 4 - Set scene background color to black
         backgroundColor = SKColor.cyanColor()
+   
+        
+        // Unendlches Aufrufen von Monstern
+        
+        runAction(SKAction.repeatActionForever(
+            SKAction.sequence([
+                SKAction.runBlock(spawnEnemy),
+                SKAction.waitForDuration(2.0)])))
+        
+      //Physiks / Gravity für den Spieler einfügen
+        player.physicsBody = SKPhysicsBody(circleOfRadius:player.frame.size.width * 0.3)
+        player.physicsBody?.allowsRotation = false
     }
     
     //Gegner
@@ -40,8 +52,37 @@ class GameScene: SKScene {
         // 3
         enemy.name = "enemy"
         // 4
-        enemy.position = CGPoint(x: frame.size.width, y: frame.size.height * random(0, max:1))
+        enemy.position = CGPoint(x: frame.size.width + enemy.size.width/10,
+                                 y: frame.size.height * random(0, max: 1))
         // 5
         addChild(enemy)
+    
+        // Bewegung der Gegner
+        enemy.runAction(
+            SKAction.moveByX(-size.width - enemy.size.width, y: 0.0,
+                duration: NSTimeInterval(random(5, max: 10))))
     }
-}
+    //Spielfigur zum springen bringen
+    
+    func jumpPlayer() {
+        // 1
+        let impulse =  CGVector(dx: 0, dy: 75)
+        // 2
+        player.physicsBody?.applyImpulse(impulse)
+       
+        
+        //jump player
+            func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+            jumpPlayer()
+            for touch: AnyObject! in touches {
+                _ = touch.locationInNode(self)
+                
+                //Use touchLocation for example: button.containsPoint(touchLocation) meaning the user has pressed the button.
+            }
+        }
+    
+        
+        
+        }
+    }
+    
