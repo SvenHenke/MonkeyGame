@@ -15,13 +15,33 @@ class GameScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         
-        // 2 - Position the sprite
+    // 2 - Position the sprite
         player.position = CGPoint(x:frame.size.width * 0.1, y: frame.size.height * 0.5)
         // 3 - Add the sprite to the scene
         addChild(player)
         
         // 4 - Set scene background color to black
-        backgroundColor = SKColor.blackColor()
+        backgroundColor = SKColor.cyanColor()
     }
     
+    //Gegner
+    func random() -> CGFloat {
+        return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
+    }
+    
+    func random(min: CGFloat, max: CGFloat) -> CGFloat {
+        return random() * (max - min) + min
+    }
+    
+    // 1
+    func spawnEnemy() {
+        // 2
+        let enemy = SKSpriteNode(imageNamed: "boss_ship")
+        // 3
+        enemy.name = "enemy"
+        // 4
+        enemy.position = CGPoint(x: frame.size.width, y: frame.size.height * random(0, max:1))
+        // 5
+        addChild(enemy)
+    }
 }
